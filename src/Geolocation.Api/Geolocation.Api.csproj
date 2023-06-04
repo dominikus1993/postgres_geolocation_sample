@@ -5,4 +5,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Geolocation.Core\Geolocation.Core.csproj" />
+    <ProjectReference Include="..\Geolocation.Infrastructure\Geolocation.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
