@@ -18,8 +18,13 @@ public sealed class ShopsDbContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-    public async Task<EfShop?> GetById(ShopId id, CancellationToken cancellationToken)
+    private static readonly Func<ShopsDbContext, ShopId, CancellationToken, Task<EfShop?>> GetByIdQ =
+        EF.CompileAsyncQuery(
+            (ShopsDbContext context, ShopId id, CancellationToken cancellationToken) =>
+                context.Shops.AsNoTracking().FirstOrDefault(c => c.Id == id));
+    
+    public Task<EfShop?> GetById(ShopId id, CancellationToken cancellationToken)
     {
-        return await Shops.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
+        return GetByIdQ(this, id, cancellationToken);
     }
 }
