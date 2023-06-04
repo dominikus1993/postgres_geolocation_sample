@@ -11,4 +11,8 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Geolocation.Core\Geolocation.Core.csproj" />
+  </ItemGroup>
+
 </Project>

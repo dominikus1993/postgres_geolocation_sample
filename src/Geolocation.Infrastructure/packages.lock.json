@@ -133,6 +133,9 @@
           "Npgsql": "7.0.4"
         }
       },
+      "geolocation.core": {
+        "type": "Project"
+      },
       "Microsoft.Extensions.Configuration.Abstractions": {
         "type": "CentralTransitive",
         "requested": "[7.0.0, )",
