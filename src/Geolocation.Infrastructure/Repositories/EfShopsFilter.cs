@@ -31,8 +31,8 @@ public sealed class EfShopsFilter : IShopsFilter
         var meters = distance.ToMeteres();
         var shops = context.Shops.AsNoTracking()
             .Select(x => new { x.Id, x.Location, Distance = x.Location.Distance(shop.Location) })
-            .Where(x => x.Distance <= meters);
-
+            .Where(x => x.Id != shop.Id && x.Distance <= meters);
+        var q = shops.ToQueryString();
         await foreach (var nearestShop in shops.AsAsyncEnumerable().WithCancellation(cancellationToken))
         {
             yield return new Shop(nearestShop.Id, new ShopLocation(nearestShop.Location.X, nearestShop.Location.Y));

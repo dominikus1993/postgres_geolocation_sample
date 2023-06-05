@@ -2,6 +2,7 @@
 using Geolocation.Core.Repositories;
 using Geolocation.Infrastructure.Repositories;
 using Geolocation.Tests.Fixture;
+using Shouldly;
 
 namespace Geolocation.Tests.Infrastructure.Repositories;
 
@@ -22,9 +23,10 @@ public class EfShopsFilterTests : IClassFixture<PostgresSqlFixture>, IAsyncLifet
     public async Task TestNearestShopsWhenExists()
     {
         var subject = await _shopsFilter.GetNearestShopsTo(new ShopId(735), new DistanceKilometers(10)).ToListAsync();
-        
+
         Assert.NotNull(subject);
         Assert.NotEmpty(subject);
+        subject.ShouldNotContain(x => x.Id == new ShopId(735));
     }
 
     public async Task InitializeAsync()
@@ -36,6 +38,8 @@ public class EfShopsFilterTests : IClassFixture<PostgresSqlFixture>, IAsyncLifet
             new Shop(new ShopId(749), new ShopLocation(19.39249588, 51.79717099)),
             new Shop(new ShopId(1328), new ShopLocation(19.3921075, 51.78932352)),
             new Shop(new ShopId(1687), new ShopLocation(19.421356, 51.801341)),
+            new Shop(new ShopId(818), new ShopLocation(19.45489853, 51.79911283)),
+            new Shop(new ShopId(865), new ShopLocation(19.43462448, 51.81754283)),
         });
     }
 
