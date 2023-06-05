@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions
             {
                 optionsBuilder.EnableRetryOnFailure(5);
                 optionsBuilder.CommandTimeout(720);
-                optionsBuilder.UseNetTopologySuite();
+                optionsBuilder.UseNetTopologySuite(geographyAsDefault: true);
                 optionsBuilder.MigrationsAssembly(typeof(ShopsDbContext).Assembly.FullName);
             });
         });

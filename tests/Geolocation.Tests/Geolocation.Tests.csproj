@@ -24,10 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Repositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\src\Geolocation.Core\Geolocation.Core.csproj" />
     <ProjectReference Include="..\..\src\Geolocation.Infrastructure\Geolocation.Infrastructure.csproj" />
   </ItemGroup>

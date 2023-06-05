@@ -1161,14 +1161,27 @@
         }
       },
       "geolocation.core": {
-        "type": "Project"
+        "type": "Project",
+        "dependencies": {
+          "System.Linq.Async": "[6.0.1, )"
+        }
       },
       "geolocation.infrastructure": {
         "type": "Project",
         "dependencies": {
+          "FlexLabs.EntityFrameworkCore.Upsert": "[7.0.0, )",
           "Geolocation.Core": "[1.0.0, )",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "[7.0.4, )",
           "Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite": "[7.0.4, )"
+        }
+      },
+      "FlexLabs.EntityFrameworkCore.Upsert": {
+        "type": "CentralTransitive",
+        "requested": "[7.0.0, )",
+        "resolved": "7.0.0",
+        "contentHash": "cblLAKnAuJjxzP9vsQlHyz9DNzlOuI6zJpDF6pYdmKJ9JK3ko1K9XY8HuCa8hITqh7CvhZsxYfcGjhWbokK1ZA==",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "7.0.0"
         }
       },
       "Microsoft.Extensions.Configuration.Abstractions": {
@@ -1228,6 +1241,15 @@
         "dependencies": {
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.4",
           "Npgsql.NetTopologySuite": "7.0.4"
+        }
+      },
+      "System.Linq.Async": {
+        "type": "CentralTransitive",
+        "requested": "[6.0.1, )",
+        "resolved": "6.0.1",
+        "contentHash": "0YhHcaroWpQ9UCot3Pizah7ryAzQhNvobLMSxeDIGmnXfkQn8u5owvpOH0K6EVB+z9L7u6Cc4W17Br/+jyttEQ==",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0"
         }
       },
       "System.Memory": {

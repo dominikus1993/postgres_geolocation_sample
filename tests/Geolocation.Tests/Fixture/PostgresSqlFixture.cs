@@ -11,7 +11,7 @@ public sealed class PostgresSqlFixture: IAsyncLifetime, IDisposable
     public ShopsDbContext DbContext { get; private set; } = null!;
     public PostgresSqlFixture()
     {
-        this.PostgreSql = new PostgreSqlBuilder().Build();
+        this.PostgreSql = new PostgreSqlBuilder().WithImage("postgis/postgis:15-3.3").Build();
     }
 
     public async Task InitializeAsync()
@@ -26,6 +26,7 @@ public sealed class PostgresSqlFixture: IAsyncLifetime, IDisposable
                     optionsBuilder.EnableRetryOnFailure(5);
                     optionsBuilder.CommandTimeout(500);
                     optionsBuilder.MigrationsAssembly("Geolocation.Infrastructure");
+                    optionsBuilder.UseNetTopologySuite(geographyAsDefault: true);
                 });
         var context = new ShopsDbContext(builder.Options);
         DbContextFactory = new TestDbContextFactory(builder);

@@ -1,7 +1,9 @@
+using System.Runtime.CompilerServices;
 using Geolocation.Core.Model;
 using Geolocation.Core.Repositories;
 using Geolocation.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using NetTopologySuite.Geometries;
 
 namespace Geolocation.Infrastructure.Repositories;
 
@@ -14,7 +16,8 @@ public sealed class EfShopsFilter : IShopsFilter
         _dbContextFactory = dbContextFactory;
     }
 
-    public async IAsyncEnumerable<Shop> GetNearestShopsTo(ShopId id, ushort distance, CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<Shop> GetNearestShopsTo(ShopId id, DistanceKilometers distance,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         await using var context = await _dbContextFactory.CreateDbContextAsync(cancellationToken);
 
@@ -25,12 +28,14 @@ public sealed class EfShopsFilter : IShopsFilter
             yield break;
         }
 
-        var shops = context.Shops.AsNoTracking().Where(x => x.Location.Distance(shop.Location) <= distance)
-            .Select(x => new { x.Id, x.Location, Distance = x.Location.Distance(shop.Location) });
+        var meters = distance.ToMeteres();
+        var shops = context.Shops.AsNoTracking()
+            .Select(x => new { x.Id, x.Location, Distance = x.Location.Distance(shop.Location) })
+            .Where(x => x.Distance <= meters);
 
         await foreach (var nearestShop in shops.AsAsyncEnumerable().WithCancellation(cancellationToken))
         {
-            yield return new Shop() { };
+            yield return new Shop(nearestShop.Id, new ShopLocation(nearestShop.Location.X, nearestShop.Location.Y));
         }
     }
 }

@@ -4,5 +4,5 @@ namespace Geolocation.Core.Repositories;
 
 public interface IShopsFilter
 {
-    IAsyncEnumerable<Shop> GetNearestShopsTo(ShopId id, ushort distance, CancellationToken cancellationToken = default);
+    IAsyncEnumerable<Shop> GetNearestShopsTo(ShopId id, DistanceKilometers distance, CancellationToken cancellationToken = default);
 }
